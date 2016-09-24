@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JQ XML With AJAX Method</title>
+
+	<style>
+ 
+	</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){ 
+		detailAjax();
+		autoLoad();
+	});
+ 
+	function detailAjax(){
+		$.ajax({
+		 	url: "details.xml",
+		 	dataTtpe: "xml",
+		 	success: function(data){
+		 		$("ul").children().remove();
+		 		$(data).find("food").each(function(){
+		 			var allData;
+		 			allData = "<li>Name: "+$(this).find("name").text()+"</li>";
+		 			allData += "<li>Price: "+$(this).find("price").text()+"</li>";
+		 			allData += "<li>Calories: "+$(this).find("calories").text()+"</li>";
+		 			$("ul").append(allData);
+		 		});
+		 	},
+		 	error: function(){
+		 		$("ul").append("Error!");
+		 	}
+		});
+	}
+
+	function autoLoad(){
+		setTimeout(function(){
+		  detailAjax();
+		  autoLoad();
+		}, 1000);
+	}
+</script>
+</head>
+<body>
+	<h2>JQ - XML With AJAX Method</h2>
+	<div class="wrap">
+		 <ul></ul>
+	</div>
+	<br> 
+</body>
+</html>
